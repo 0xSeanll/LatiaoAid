@@ -93,7 +93,7 @@ class LatiaoAid:
             check_result = self.wait_tab_loading()
             if not check_result[0]:
                 self.close_go_back()
-            element = check_result[1]
+            element = check_result[1]  # IndexError: tuple index out of range
 
             while True:
                 # Wait for and claim latiao

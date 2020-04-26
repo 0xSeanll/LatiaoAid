@@ -14,7 +14,7 @@ pip install -U selenium
 
 ## Usage
 
-You need browsers that support selenium. See (documentations of selenium)[https://selenium-python.readthedocs.io/installation.html#drivers] for more details. Before running, specified the path to your selenium webdriver in `LatiaoAid.py`.
+You need browsers that support selenium. See [documentations of selenium](https://selenium-python.readthedocs.io/installation.html#drivers) for more details. Before running, specified the path to your selenium webdriver in `LatiaoAid.py`.
 
 This is a Pycharm project. You can run it in Pycharm directly.
 
