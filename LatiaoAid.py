@@ -2,7 +2,8 @@ from datetime import datetime
 from time import sleep
 
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException, TimeoutException, ElementClickInterceptedException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException, ElementClickInterceptedException, \
+    StaleElementReferenceException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
@@ -127,6 +128,9 @@ class LatiaoAid:
         except ElementClickInterceptedException as e:
             print(e)
             sleep(1)
+            return
+        except StaleElementReferenceException as e:
+            print(e)
             return
 
         loot = "辣条" if "赠送的小电视飞船" in sender_info_text else \
