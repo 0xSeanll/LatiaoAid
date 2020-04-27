@@ -94,7 +94,7 @@ class LatiaoAid:
         tabs = self.driver.window_handles
         self.loot_tab = [tab for tab in tabs if tab != self.base_tab][0]
         self.driver.switch_to.window(self.loot_tab)
-        _ = WebDriverWait(self.driver, 5).until(
+        _ = WebDriverWait(self.driver, 7).until(
             ec.presence_of_element_located((By.XPATH, '//div[starts-with(@class, "function-bar")]'))
         )
 
@@ -115,14 +115,21 @@ class LatiaoAid:
     def collect(self):
         element = self.driver.find_element_by_xpath('//div[starts-with(@class, "function-bar")]')
         while element.text != '点击领奖':
+            s = element.text.replace('等待开奖', '')
+            second = int(s.split(":")[1]) + int(s.split(":")[0]) * 60
+            if second > 5:
+                print("真让人搞不懂")
+                return
             pass
         sender_info_text = str(self.driver.find_element_by_xpath('//div[@class="gift-sender-info"]').text)
 
         try:
             element.click()
+            _ = WebDriverWait(self.driver, 10).until_not(
+                ec.presence_of_element_located((By.XPATH, '//div[@class="draw-bottom"]')))
         except ElementClickInterceptedException as e:
             print(e)
-            sleep(1)
+            sleep(3)
             return
         except StaleElementReferenceException as e:
             print(e)
@@ -134,6 +141,8 @@ class LatiaoAid:
                     "亲密度" if "上任舰长" in sender_info_text else "亲密度"
 
         msg = f'{sender_info_text} {loot}到手'
+
+        # ! This message will print multiple times under certain circumstances
         Logger.log(msg)
 
     def main(self):
@@ -159,9 +168,12 @@ class LatiaoAid:
                         try:
                             self.wait_for_countdown(link)
                             self.collect()
+                        except IndexError as e:
+                            print(e)
+                            continue
                         except NoSuchElementException as e:
-                            print("Latiao disappeared", e)
                             Logger.log("没辣条了")
+                            sleep(1)
                             self.close_go_back()
                             break
                         except StaleElementReferenceException as e:
@@ -192,3 +204,4 @@ class LatiaoAid:
 
 if __name__ == '__main__':
     LatiaoAid().main()
+# draw-bingo-cntr draw-bingo-cntr
