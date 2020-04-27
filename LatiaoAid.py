@@ -2,7 +2,8 @@ from datetime import datetime
 from time import sleep
 
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException, TimeoutException, ElementClickInterceptedException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException, ElementClickInterceptedException, \
+    StaleElementReferenceException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
@@ -55,7 +56,7 @@ class LatiaoAid:
             try:
                 WebDriverWait(self.driver, 10).until(
                     ec.presence_of_element_located((By.XPATH, '//div[@class="chat-history-panel"]')))
-            except TimeoutError as e:
+            except TimeoutError as _:
                 self.driver.refresh()
                 continue
             break
@@ -72,7 +73,7 @@ class LatiaoAid:
                 links.append(
                     latiao.find_element_by_tag_name('a').get_attribute('href')
                 )
-            except NoSuchElementException as e:
+            except NoSuchElementException as _:
                 continue
         self.clear_chat_history_panel()
         return links
@@ -81,7 +82,7 @@ class LatiaoAid:
         while True:
             try:
                 self.driver.find_element_by_xpath('//span[@class="icon-item icon-font icon-clear"]').click()
-            except ElementClickInterceptedException as e:
+            except ElementClickInterceptedException as _:
                 print("It seems that some thing obscures the clear screen button. Retry in 10 seconds.")
                 sleep(10)
             else:
@@ -112,11 +113,6 @@ class LatiaoAid:
             return
 
     def collect(self):
-        """
-        Wait for 辣条s to be collectible and collect on the current tab, until there are not any.
-        :return: No return value.
-        """
-        owner_name = self.driver.find_element_by_xpath('//a[starts-with(@class, "room-owner-username")]').text
         element = self.driver.find_element_by_xpath('//div[starts-with(@class, "function-bar")]')
         while element.text != '点击领奖':
             pass
@@ -127,6 +123,9 @@ class LatiaoAid:
         except ElementClickInterceptedException as e:
             print(e)
             sleep(1)
+            return
+        except StaleElementReferenceException as e:
+            print(e)
             return
 
         loot = "辣条" if "赠送的小电视飞船" in sender_info_text else \
@@ -165,6 +164,10 @@ class LatiaoAid:
                             Logger.log("没辣条了")
                             self.close_go_back()
                             break
+                        except StaleElementReferenceException as e:
+                            print(e)
+                            self.close_go_back()
+                            break
                         except TimeoutException as e:
                             print("load failed", e)
                             self.close_go_back()
@@ -182,7 +185,7 @@ class LatiaoAid:
                 for latiao in latiaos:
                     try:
                         print(latiao.text)
-                    except NoSuchElementException as e:
+                    except NoSuchElementException as _:
                         continue
             sleep(5)
 
