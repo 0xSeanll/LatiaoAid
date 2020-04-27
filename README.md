@@ -1,11 +1,39 @@
-# Latiao Aid Version 1.0
+# LatiaoAid Version 1.1
 
 ## Introduction
 
-This project serves the purpose of automatic collecting 辣条 or 主播亲密度 on live.bilibili.com using selenium. This is the very first version, so the functions are fairly trivial and little attentions are paid to the design.
+The program enables automatic collecting bonus(辣条) on live.bilibili.com, while you are watching live stream.
+
+Watching live using this program, 全区礼物广播 is listened. Upon receiving, the corresponding live channel is opened in a new tab and the waiting time for the bonus is obtained. If the waiting time is too long, the tab will be closed temporarily and the program will start timing and switch back to the live channel you watched. When it is almost time to claim the prize, the channel will be reopened, and the prize will be collected.
+
+Example log:
+
+>[2020-04-27 17:15:56.729825] 【一个小奶瓶儿】白嫖启动
+>
+>[2020-04-27 17:15:57.473284] 【一个小奶瓶儿】恭喜奶瓶家的清雪yu上任舰长 亲密度到手
+>
+>[2020-04-27 17:16:01.881398] 【一个小奶瓶儿】等 107 秒再来
+>
+>[2020-04-27 17:17:53.138381] 【一个小奶瓶儿】感谢女神小奶瓶 赠送的小电视飞船 辣条到手
+>
+>[2020-04-27 17:17:57.562686] 【一个小奶瓶儿】没辣条了
+>
+>[2020-04-27 17:18:02.972501] 【creamOUO】白嫖启动
+>
+>[2020-04-27 17:18:03.573169] 【creamOUO】感谢没错我就是FG 赠送的小电视飞船 辣条到手
+>
+>[2020-04-27 17:18:06.999048] 【creamOUO】没辣条了
+>
+>[2020-04-27 17:19:16.961655] 【玖绫Aya】白嫖启动
+>
+>[2020-04-27 17:19:17.582990] 【玖绫Aya】等 109 秒再来
+>
+>[2020-04-27 17:21:10.759032] 【玖绫Aya】感谢亚总の文件尼 赠送的小电视飞船 辣条到手
+
 
 ## Dependency
 
+- Python 3
 - Selenium 3
 
 ```
@@ -26,9 +54,7 @@ After logged in, the script will work automatically.
 
 ## TODO list
 
-- Multi-tab processing.
 - A friendly GUI.
-- A logger.
 - A better design.
 
 ## Disclaimer
