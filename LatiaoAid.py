@@ -1,14 +1,15 @@
+import traceback
 from datetime import datetime
 from time import sleep
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, TimeoutException, ElementClickInterceptedException, \
-    StaleElementReferenceException
+    StaleElementReferenceException, WebDriverException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 
-GECKODRIVER_PATH = '/usr/local/bin/geckodriver'
+WEBDRIVER_PATH = '/usr/local/bin/geckodriver'
 BASE_URL = "https://passport.bilibili.com/login"
 YJZ_CHANNEL = "https://live.bilibili.com/528"
 
@@ -19,12 +20,24 @@ class Logger:
     @staticmethod
     def log(s):
         with open('log.txt', 'a') as f:
-            line = f'[{datetime.now().__str__()}] '
-            line += f'【{Logger.owner_name}】'
-            line += s
+            line = f'[{datetime.now().__str__()}] 【{Logger.owner_name}】' + s + " (゜-゜)つロ "
             print(line)
-            line += '\n'
+            f.write(line + '\n')
+
+    @staticmethod
+    def err(pos, msg, exc=None):
+        with open('log.txt', 'a') as f:
+            line = f'[{datetime.now().__str__()}] 【{pos}】' + msg
+            if exc is not None:
+                print(exc)
+            print(line)
             f.write(line)
+
+    @staticmethod
+    def print(msg):
+        with open('log.txt', 'a') as f:
+            print(msg)
+            f.write(msg + '\n')
 
 
 class LatiaoDisappearException(Exception):
@@ -33,7 +46,7 @@ class LatiaoDisappearException(Exception):
 
 class LatiaoAid:
     def __init__(self):
-        self.driver = webdriver.Firefox(executable_path=GECKODRIVER_PATH)
+        self.driver = webdriver.Firefox(executable_path=WEBDRIVER_PATH)
         self.base_tab = None
         self.loot_tab = None
 
@@ -48,18 +61,23 @@ class LatiaoAid:
     def to_base_tab(self):
         self.driver.switch_to.window(self.base_tab)
 
-    def login(self):
-        self.driver.get(BASE_URL)
-        WebDriverWait(self.driver, 99999).until(ec.url_to_be("https://www.bilibili.com/"))
+    def load_channel_528(self):
         self.driver.get(YJZ_CHANNEL)
         while True:
             try:
                 WebDriverWait(self.driver, 10).until(
                     ec.presence_of_element_located((By.XPATH, '//div[@class="chat-history-panel"]')))
-            except TimeoutError as _:
-                self.driver.refresh()
+            except TimeoutError:
+                Logger.err("login()", "Failed to load channel 528")
+                self.driver.get(YJZ_CHANNEL)
                 continue
-            break
+            else:
+                break
+        self.base_tab = self.driver.current_window_handle
+
+    def login(self):
+        self.driver.get(BASE_URL)
+        WebDriverWait(self.driver, 99999).until(ec.url_to_be("https://www.bilibili.com/"))
 
     def wait_for_present(self):
         links = []
@@ -70,10 +88,13 @@ class LatiaoAid:
             sleep(5)
         for latiao in latiaos:
             try:
-                links.append(
-                    latiao.find_element_by_tag_name('a').get_attribute('href')
-                )
-            except NoSuchElementException as _:
+                link = latiao.find_element_by_tag_name('a').get_attribute('href')
+                if link not in links:
+                    links.append(link)
+            except NoSuchElementException as e:
+                # Logger.err("wait_for_present()", "", e)
+                if YJZ_CHANNEL not in links:
+                    links.append(YJZ_CHANNEL)
                 continue
         self.clear_chat_history_panel()
         return links
@@ -83,8 +104,18 @@ class LatiaoAid:
             try:
                 self.driver.find_element_by_xpath('//span[@class="icon-item icon-font icon-clear"]').click()
             except ElementClickInterceptedException as _:
-                print("It seems that some thing obscures the clear screen button. Retry in 10 seconds.")
-                sleep(10)
+                try:
+                    element = self.driver.find_element_by_xpath('//div[starts-with(@class, "function-bar")]')
+                except NoSuchElementException:
+                    Logger.err("clear_chat_history_panel()",
+                               "It seems that some thing obscures the clear screen button. Retry in 10 seconds.")
+                    sleep(10)
+                else:
+                    try:
+                        element.click()
+                    except ElementClickInterceptedException as e:
+                        Logger.err("clear_chat_history_panel()", "Unable to click 清楚弹幕. Retry.")
+                        continue
             else:
                 break
 
@@ -94,7 +125,7 @@ class LatiaoAid:
         tabs = self.driver.window_handles
         self.loot_tab = [tab for tab in tabs if tab != self.base_tab][0]
         self.driver.switch_to.window(self.loot_tab)
-        _ = WebDriverWait(self.driver, 7).until(
+        _ = WebDriverWait(self.driver, 10).until(
             ec.presence_of_element_located((By.XPATH, '//div[starts-with(@class, "function-bar")]'))
         )
 
@@ -104,6 +135,9 @@ class LatiaoAid:
             return
         else:
             s = element.text.replace('等待开奖', '')
+            if len(s) == 1:
+                print("【真让人搞不懂】难道是字突然变了？", s)
+                return
             second = int(s.split(":")[1]) + int(s.split(":")[0]) * 60
             if second > 5:
                 self.close_go_back()
@@ -116,92 +150,139 @@ class LatiaoAid:
         element = self.driver.find_element_by_xpath('//div[starts-with(@class, "function-bar")]')
         while element.text != '点击领奖':
             s = element.text.replace('等待开奖', '')
-            second = int(s.split(":")[1]) + int(s.split(":")[0]) * 60
+            try:
+                second = int(s.split(":")[1]) + int(s.split(":")[0]) * 60
+            except IndexError:
+                break
             if second > 5:
-                print("真让人搞不懂")
+                Logger.err("collect()", "真让人搞不懂")
                 return
-            pass
         sender_info_text = str(self.driver.find_element_by_xpath('//div[@class="gift-sender-info"]').text)
 
-        try:
-            element.click()
-            _ = WebDriverWait(self.driver, 10).until_not(
-                ec.presence_of_element_located((By.XPATH, '//div[@class="draw-bottom"]')))
-        except ElementClickInterceptedException as e:
-            print(e)
-            sleep(3)
-            return
-        except StaleElementReferenceException as e:
-            print(e)
-            return
+        while True:
+            try:
+                element.click()
+            except ElementClickInterceptedException as e:
+                # Logger.err("collect()", "Cannot click 点击领奖", e)
+                sleep(1)
+                continue
+            except StaleElementReferenceException as e:
+                Logger.err("collect()", "点击领奖 Staled", e)
+                break
+            else:
+                break
 
-        loot = "辣条" if "赠送的小电视飞船" in sender_info_text else \
+        loot = "辣条" if "赠送" in sender_info_text else \
             "辣条" if "赢得大乱斗PK胜利" in sender_info_text else \
-                "亲密度" if "上任提督" in sender_info_text else \
-                    "亲密度" if "上任舰长" in sender_info_text else "亲密度"
+                "亲密度" if "上任" in sender_info_text else "不知道什么东西"
 
         msg = f'{sender_info_text} {loot}到手'
 
-        # ! This message will print multiple times under certain circumstances
+        # ! This message sometimes is printed multiple times
         Logger.log(msg)
+
+    # def show_loots(self):
+    #     # self.driver.find_element_by_xpath('//div[@class="gift-package live-skin-highlight-bg"]').click()
+    #     # _ = WebDriverWait(self.driver, 10).until(
+    #     #     ec.presence_of_element_located((By.XPATH, '//div[@class="wrap"]'))
+    #     # )
+    #     loots = self.driver.find_elements_by_xpath('//div[@class="gift-item-wrap"]')[1:]
+    #     total = 0
+    #     expired_today = 0
+    #     for loot in loots:
+    #         expiration = loot.find_element_by_class_name("expiration").text
+    #         # try:
+    #         num = int(str(loot.find_element_by_class_name("num").text))
+    #         # except ValueError:
+    #         #     return
+    #         # except StaleElementReferenceException:
+    #         #     return
+    #         total += num
+    #         if expiration == "1天":
+    #             expired_today += num
+    #     Logger.log(f"包里有 {total} 根辣条，今天有 {expired_today} 根到保质期")
+    #     # while True:
+    #     #     try:
+    #     #         self.driver.find_element_by_xpath('//div[@class="gift-package live-skin-highlight-bg"]').click()
+    #     #     except ElementClickInterceptedException:
+    #     #         continue
+    #     #     else:
+    #     #         break
 
     def main(self):
         self.login()
-        self.base_tab = self.driver.current_window_handle
-        try:
-            while True:
-                links = self.wait_for_present()
-                for link in links:
-                    try:
-                        self.load_new_tab(link)
-                    except TimeoutException as e:
-                        print("load failed", e)
-                        self.close_go_back()
-                        continue
-
-                    owner_name = \
-                        self.driver.find_element_by_xpath('//a[starts-with(@class, "room-owner-username")]').text
-                    Logger.owner_name = owner_name
-                    Logger.log("白嫖启动")
-
-                    while True:
+        self.load_channel_528()
+        while True:
+            try:
+                while True:
+                    links = self.wait_for_present()
+                    for link in links:
                         try:
-                            self.wait_for_countdown(link)
-                            self.collect()
-                        except IndexError as e:
-                            print(e)
-                            continue
-                        except NoSuchElementException as e:
-                            Logger.log("没辣条了")
-                            sleep(1)
-                            self.close_go_back()
-                            break
-                        except StaleElementReferenceException as e:
-                            print(e)
-                            self.close_go_back()
-                            break
+                            # TODO Remove duplicate links when finishing processing a link.
+                            self.load_new_tab(link)
                         except TimeoutException as e:
-                            print("load failed", e)
+                            Logger.err("load_new_tab", "load failed", e)
                             self.close_go_back()
-                            break
-        finally:
-            self.driver.close()
-            print("Driver closed")
+                            continue
+
+                        owner_name = \
+                            self.driver.find_element_by_xpath('//a[starts-with(@class, "room-owner-username")]').text
+                        Logger.owner_name = owner_name
+                        Logger.log("白嫖启动")
+
+                        while True:
+                            try:
+                                # TODO: 不应该一直在一个直播间墨迹
+                                self.wait_for_countdown(link)
+                                self.collect()
+                            except IndexError as e:
+                                Logger.err("LOOP", "Index Error", e)
+                                traceback.print_exc()
+                                continue
+                            except NoSuchElementException as e:
+                                Logger.log("没辣条了")
+                                sleep(1)
+                                self.close_go_back()
+                                break
+                            except StaleElementReferenceException as e:
+                                Logger.err("LOOP", "StaleElementReferenceException", e)
+                                traceback.print_exc()
+                                self.close_go_back()
+                                break
+                            except TimeoutException as e:
+                                Logger.err("LOOP", "load failed", e)
+                                self.close_go_back()
+                                break
+                            except WebDriverException as e:
+                                Logger.err("LOOP", "Unexpected exception", e)
+                                traceback.print_exc()
+                                self.close_go_back()
+                                break
+
+                        # try:
+                        #     self.driver.find_element_by_xpath(
+                        #         '//div[@class="gift-package live-skin-highlight-bg"]'
+                        #     ).click()
+                        #     self.show_loots()
+                        # except WebDriverException as e:
+                        #     Logger.err("show_loots()", e)
+
+            except WebDriverException as e:
+                Logger.err("OUTER LOOP", "Unexpected exception. Recovering.", e)
+                traceback.print_exc()
+                if len(self.driver.window_handles) == 2:
+                    self.driver.execute_script("window.close()")
+                    WebDriverWait(self.driver, 10).until(ec.number_of_windows_to_be(1))
+                    self.base_tab = self.driver.current_window_handle
+                self.load_channel_528()
+                continue
+            finally:
+                self.driver.close()
+                Logger.print("Driver closed")
 
     def test(self):
-        self.login()
-        self.base_tab = self.driver.current_window_handle
-        while True:
-            latiaos = self.driver.find_elements_by_xpath('//div[@class="chat-item  system-msg border-box"]')
-            if len(latiaos) != 0:
-                for latiao in latiaos:
-                    try:
-                        print(latiao.text)
-                    except NoSuchElementException as _:
-                        continue
-            sleep(5)
+        pass
 
 
 if __name__ == '__main__':
     LatiaoAid().main()
-# draw-bingo-cntr draw-bingo-cntr

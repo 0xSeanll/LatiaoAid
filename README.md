@@ -1,4 +1,4 @@
-# LatiaoAid Version 1.1
+# LatiaoAid 1.2 - Stable Release
 
 ## Introduction
 
@@ -32,6 +32,11 @@ Example log:
 >
 >[2020-04-27 17:21:10.759032] 【玖绫Aya】感谢亚总の文件尼 赠送的小电视飞船 辣条到手
 
+## Release Note
+
+### Version 1.2
+
+An ugly, yet stable release. 99.9% exceptions are handled, enabling it to be deployed on a server.
 
 ## Dependency
 
