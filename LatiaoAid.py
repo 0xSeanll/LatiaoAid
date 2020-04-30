@@ -1,5 +1,4 @@
 import traceback
-from datetime import datetime
 from time import sleep
 
 from selenium import webdriver
@@ -9,35 +8,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 
+from Logger import Logger
+
 WEBDRIVER_PATH = '/usr/local/bin/geckodriver'
 BASE_URL = "https://passport.bilibili.com/login"
 YJZ_CHANNEL = "https://live.bilibili.com/528"
-
-
-class Logger:
-    owner_name = None
-
-    @staticmethod
-    def log(s):
-        with open('log.txt', 'a') as f:
-            line = f'[{datetime.now().__str__()}] 【{Logger.owner_name}】' + s + " (゜-゜)つロ "
-            print(line)
-            f.write(line + '\n')
-
-    @staticmethod
-    def err(pos, msg, exc=None):
-        with open('log.txt', 'a') as f:
-            line = f'[{datetime.now().__str__()}] 【{pos}】' + msg
-            if exc is not None:
-                print(exc)
-            print(line)
-            f.write(line)
-
-    @staticmethod
-    def print(msg):
-        with open('log.txt', 'a') as f:
-            print(msg)
-            f.write(msg + '\n')
 
 
 class LatiaoDisappearException(Exception):
@@ -227,7 +202,7 @@ class LatiaoAid:
 
                         owner_name = \
                             self.driver.find_element_by_xpath('//a[starts-with(@class, "room-owner-username")]').text
-                        Logger.owner_name = owner_name
+                        Logger.caster = owner_name
                         Logger.log("白嫖启动")
 
                         while True:
@@ -279,9 +254,6 @@ class LatiaoAid:
             finally:
                 self.driver.close()
                 Logger.print("Driver closed")
-
-    def test(self):
-        pass
 
 
 if __name__ == '__main__':
