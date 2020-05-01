@@ -26,7 +26,7 @@ class LatiaoAid:
 
     def close_go_back(self):
         """
-        Close current tab and go back to base tab.
+        Close loot tab and go back to base tab.
         :return:
         """
         self.driver.execute_script("window.close()")
@@ -68,6 +68,9 @@ class LatiaoAid:
             try:
                 WebDriverWait(self.driver, 10).until(
                     ec.presence_of_element_located((By.XPATH, '//div[@class="chat-history-panel"]')))
+                WebDriverWait(self.driver, 10).until(
+                    ec.presence_of_element_located((By.XPATH, '//div[@id="chat-draw-area-vm"]')))
+                self.delete_element(self.driver.find_element_by_xpath('//div[@id="chat-draw-area-vm"]'))
             except TimeoutError:
                 Logger.err("login()", "Failed to load channel 528")
                 self.driver.get(BASE_TAB_LINK)
