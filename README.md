@@ -6,7 +6,7 @@ The program enables automatic collecting bonus(辣条) on live.bilibili.com, whi
 
 Watching live using this program, 全区礼物广播 is listened. Upon receiving, the corresponding live channel is opened in a new tab and the waiting time for the bonus is obtained. If the waiting time is too long, the tab will be closed temporarily and the program will start timing and switch back to the live channel you watched. When it is almost time to claim the prize, the channel will be reopened, and the prize will be collected.
 
-**Note**: The website may require **some** users to do human-verification.
+**Note**: The website may require *some* users to do human-verification.
 
 Example log:
 
@@ -61,8 +61,9 @@ After logged in, the script will work automatically.
 
 ## TODO list
 
+- Using priority queue to store channels.
 - A friendly GUI.
-- A better design.
+- A headless version.
 
 ## Disclaimer
 
