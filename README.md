@@ -8,6 +8,8 @@ Watching live using this program, 全区礼物广播 is listened. Upon receiving
 
 **Note**: The website may require *some* users to do human-verification.
 
+*Issues are warmly welcomed. Feel free to raise one if you found a bug, or had a great idea, or anything.*
+
 Example log:
 
 >[2020-04-27 17:15:56.729825] 【一个小奶瓶儿】白嫖启动 (゜-゜)つロ 
@@ -55,9 +57,9 @@ This is a Pycharm project. You can run it in Pycharm directly.
 
 To run with python3, `python3 LatiaoAid.py` is all you need.
 
-You will need login to bilibili.com manually (the script will bring up the login page for you).
+You will need login to bilibili.com manually (the script will bring up the login page or qrcode (in headless mode) for you).
 
-After logged in, the script will work automatically. 
+After logged in, the script will work automatically.  
 
 ## TODO list
 
