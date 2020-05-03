@@ -1,8 +1,10 @@
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
+from io import BytesIO
 from queue import PriorityQueue
 from time import sleep
 
+from PIL import Image
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, TimeoutException, ElementClickInterceptedException, \
     StaleElementReferenceException
@@ -26,7 +28,18 @@ class Channel:
 
 class LatiaoAid:
     def __init__(self):
-        self.driver = webdriver.Firefox(executable_path=WEBDRIVER_PATH)
+        option = webdriver.ChromeOptions()
+        chrome_prefs = {}
+        option.experimental_options["prefs"] = chrome_prefs
+        chrome_prefs["profile.default_content_settings"] = {"images": 1}
+        chrome_prefs["profile.managed_default_content_settings"] = {"images": 1}
+        CHROMEDRIVER_PATH = '/usr/local/bin/chromedriver'
+        self.driver = webdriver.Chrome(
+            executable_path=CHROMEDRIVER_PATH,
+            options=option,
+        )
+        self.driver.get('chrome://settings/')
+        self.driver.execute_script('chrome.settingsPrivate.setDefaultZoom(0.5);')
         self.waiting_list = []
         self.queue = PriorityQueue()
         self.set = set()
@@ -41,6 +54,9 @@ class LatiaoAid:
 
     def login(self):
         self.driver.get(BASE_URL)
+        qrcode_img = self.driver.get_screenshot_as_png()
+        img = Image.open(BytesIO(qrcode_img))
+        img.show()
         WebDriverWait(self.driver, 99999).until(ec.url_to_be("https://www.bilibili.com/"))
         self.driver.get(YJZ_CHANNEL)
         while True:
@@ -71,7 +87,7 @@ class LatiaoAid:
         while True:
             try:
                 self.driver.find_element_by_xpath('//span[@class="icon-item icon-font icon-clear"]').click()
-            except ElementClickInterceptedException as _:
+            except ElementClickInterceptedException:
                 try:
                     element = self.driver.find_element_by_xpath('//div[starts-with(@class, "function-bar")]')
                 except NoSuchElementException:
@@ -183,7 +199,7 @@ class LatiaoAid:
                     self.load_tab(link)
                 except TimeoutException as e:
                     print("Timeout")
-                    print("Close tab C")
+                    print("Close tab. Get wait")
                     self.close_tab()
                     continue
                 caster_name = self.get_caster_name()
@@ -195,21 +211,27 @@ class LatiaoAid:
                 channel = self.queue.get()
                 print(channel.caster, channel.link, channel.due_time)
                 Logger.caster = channel.caster
-                if len(self.driver.window_handles) == 2 and self.driver.current_url != channel.link.replace('http',
-                                                                                                            'https'):
+                if len(self.driver.window_handles) == 1 or (
+                        len(self.driver.window_handles) == 2 and self.driver.current_url != channel.link.replace('http',
+                                                                                                                 'https')):
                     try:
-                        self.close_tab()
+                        if len(self.driver.window_handles) == 2:
+                            self.close_tab()
                         self.load_tab(channel.link)
                     except TimeoutException as e:
                         print(e)
+                        print("1 Remove from set")
                         self.set.remove(channel.link)
+                        self.close_tab()
                         continue
                 print(self.driver.current_url, channel.link)
                 try:
                     waiting_time = self.get_wait_time()
                 except NoSuchElementException as e:
                     print(e)
+                    print("2 Remove from set")
                     self.set.remove(channel.link)
+                    self.close_tab()
                     continue
                 if waiting_time > 10:
                     print("too long", waiting_time)
@@ -224,13 +246,16 @@ class LatiaoAid:
                             self.load_tab(channel.link)
                         except TimeoutException as e:
                             print(e)
+                            print("3 Remove from set")
                             self.set.remove(channel.link)
+                            self.close_tab()
                             continue
                 while self.have_latiao():
                     try:
                         waiting_time = self.get_wait_time()
                     except NoSuchElementException as e:
                         print(e)
+                        print("4 Remove from set")
                         self.set.remove(channel.link)
                         continue
                     if waiting_time < 10:
@@ -246,6 +271,7 @@ class LatiaoAid:
                 else:
                     print("channel.link = " + channel.link)
                     self.set.remove(channel.link)
+                    self.close_tab()
 
 
 if __name__ == '__main__':

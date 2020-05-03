@@ -40,10 +40,11 @@ Example log:
 
 An ugly, yet stable release. 99.9% exceptions are handled, enabling it to be deployed on a server.
 
-## Dependency
+## Dependencies
 
 - Python 3
 - Selenium 3
+- Pillow
 
 ```
 pip install -U selenium
