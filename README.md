@@ -54,10 +54,20 @@ An ugly, yet stable release. 99.9% exceptions are handled, enabling it to be dep
 - selenium==3.141.0
 - urllib3==1.25.9
 
+```shell script
+pip install -r requirements.txt
+```
+
 You may want to use virtual environment.
 
-```
+```shell script
+virtualenv LatiaoAidVenv --python=python3.7
+cd LatiaoAidVenv
+source bin/activate
+git clone git@github.com:0xSeanll/LatiaoAid.git
+cd LatiaoAid
 pip install -r requirements.txt
+python3 run.py
 ```
 
 ## Usage
