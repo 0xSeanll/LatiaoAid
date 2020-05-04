@@ -54,22 +54,27 @@ class LatiaoAid:
         Load base tab, and wait for chat-history-panel(弹幕窗口) to show up. Update self.base_tab
         :return:
         """
+        self.logger.log("开始加载 Base Tab")
         self.driver.get(BASE_TAB_LINK)
         while True:
             try:
                 # Delete JS player
                 element = WebDriverWait(self.driver, 10).until(
-                    ec.presence_of_element_located((By.XPATH, '//div[@class=""bilibili-live-player relative""]')))
+                    ec.presence_of_element_located((By.XPATH, '//div[@class="bilibili-live-player relative"]')))
                 self.delete_element(element)
+                self.logger.log("播放器被成功干掉了～")
                 element = WebDriverWait(self.driver, 10).until(
                     ec.presence_of_element_located((By.XPATH, '//div[@id="chat-draw-area-vm"]')))
                 self.delete_element(element)
+                self.logger.log("弹窗被成功干掉了～")
                 element = WebDriverWait(self.driver, 10).until(
                     ec.presence_of_element_located(
                         (By.XPATH, '//div[@data-upgrade-intro="Follow"]//div[@class="side-bar-btn-cntr"]')))
                 element.click()
+                self.logger.log("成功收回了关注窗口～")
                 WebDriverWait(self.driver, 10).until(
                     ec.presence_of_element_located((By.XPATH, '//div[@class="chat-history-panel"]')))
+                self.logger.log("Base Tab 加载成功～")
             except TimeoutError:
                 self.logger.err("login()", "Failed to load channel 528")
                 self.driver.get(BASE_TAB_LINK)
@@ -262,12 +267,15 @@ class LatiaoAid:
             except WebDriverException as e:
                 self.logger.err("OUTER LOOP", "从来没见过的错误诶. 正在尝试恢复！.", e)
                 self.logger.print(traceback.format_exc())
-                if len(self.driver.window_handles) == 2:
-                    self.driver.execute_script("window.close()")
-                    WebDriverWait(self.driver, 10).until(ec.number_of_windows_to_be(1))
-                    self.base_tab = self.driver.current_window_handle
-                self.load_base_tab()
-                continue
-            finally:
-                self.driver.quit()
-                self.logger.log("LatiaoAid Terminated.")
+                try:
+                    if len(self.driver.window_handles) == 2:
+                        self.driver.execute_script("window.close()")
+                        WebDriverWait(self.driver, 10).until(ec.number_of_windows_to_be(1))
+                        self.base_tab = self.driver.current_window_handle
+                    self.load_base_tab()
+                    continue
+                except Exception as e:
+                    self.logger.err("RCOVERY", "恢复失败. 程序即将退出.", e)
+                    self.logger.print(traceback.format_exc())
+                    self.driver.quit()
+                    self.logger.log("LatiaoAid Terminated.")
