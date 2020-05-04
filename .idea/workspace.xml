@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c943f806-da08-4f95-9591-5ea973892eea" name="Default Changelist" comment="Update dependencies">
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations/LatiaoAid.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/LatiaoAid.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/LatiaoAid.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/democles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/democles.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="c943f806-da08-4f95-9591-5ea973892eea" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LatiaoAid.py" beforeDir="false" afterPath="$PROJECT_DIR$/LatiaoAid.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +102,7 @@
       <workItem from="1588380712857" duration="2965000" />
       <workItem from="1588387125373" duration="542000" />
       <workItem from="1588516226662" duration="7947000" />
-      <workItem from="1588561475989" duration="1766000" />
+      <workItem from="1588561475989" duration="3222000" />
     </task>
     <task id="LOCAL-00001" summary="First commit. Ver 1.0">
       <created>1587927281089</created>
@@ -251,7 +244,28 @@
       <option name="project" value="LOCAL" />
       <updated>1588524598478</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Add run.py">
+      <created>1588563335109</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1588563335109</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Update gitignore">
+      <created>1588563354874</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1588563354874</updated>
+    </task>
+    <task id="LOCAL-00023" summary="add requirements.txt">
+      <created>1588563372624</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1588563372624</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -276,7 +290,10 @@
     <MESSAGE value="Headless support beta.&#10;Images blocking.&#10;Stability and performance improvements." />
     <MESSAGE value="Update README" />
     <MESSAGE value="Update dependencies" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update dependencies" />
+    <MESSAGE value="Add run.py" />
+    <MESSAGE value="Update gitignore" />
+    <MESSAGE value="add requirements.txt" />
+    <option name="LAST_COMMIT_MESSAGE" value="add requirements.txt" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -291,11 +308,11 @@
     </state>
     <state x="-997" y="94" key="#Notifications/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588300495297" />
     <state x="238" y="100" key="#Notifications/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588561533700" />
-    <state x="74" y="95" width="1071" height="696" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588562666321">
+    <state x="74" y="95" width="1071" height="696" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588564487498">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="-1133" y="90" width="1071" height="696" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588259983251" />
-    <state x="74" y="95" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588562666321" />
+    <state x="74" y="95" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588564487498" />
     <state x="381" y="255" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1588171983768">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
@@ -306,36 +323,36 @@
     </state>
     <state x="-859" y="182" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1587956826597" />
     <state x="404" y="195" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588562692764" />
-    <state x="217" y="23" key="CommitChangelistDialog2" timestamp="1588563354660">
+    <state x="217" y="23" key="CommitChangelistDialog2" timestamp="1588563372449">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="217" y="0" key="CommitChangelistDialog2/-1194.0.1194.834/0.0.1440.900@0.0.1440.900" timestamp="1588524140795" />
     <state x="217" y="23" key="CommitChangelistDialog2/-1194.0.1194.834/0.23.1440.877@0.23.1440.877" timestamp="1588524598328" />
     <state x="-1014" y="23" key="CommitChangelistDialog2/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588341036990" />
-    <state x="217" y="23" key="CommitChangelistDialog2/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588563354660" />
-    <state width="763" height="462" key="GridCell.Tab.0.bottom" timestamp="1588560770697">
+    <state x="217" y="23" key="CommitChangelistDialog2/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588563372449" />
+    <state width="763" height="462" key="GridCell.Tab.0.bottom" timestamp="1588563889890">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1152" height="243" key="GridCell.Tab.0.bottom/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588343295717" />
-    <state width="838" height="232" key="GridCell.Tab.0.bottom/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588522946943" />
+    <state width="763" height="462" key="GridCell.Tab.0.bottom/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588563889890" />
     <state width="763" height="462" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1588560770697" />
-    <state width="763" height="462" key="GridCell.Tab.0.center" timestamp="1588560770696">
+    <state width="763" height="462" key="GridCell.Tab.0.center" timestamp="1588563889888">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1152" height="243" key="GridCell.Tab.0.center/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588343295715" />
-    <state width="838" height="232" key="GridCell.Tab.0.center/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588522946941" />
+    <state width="763" height="462" key="GridCell.Tab.0.center/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588563889888" />
     <state width="763" height="462" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1588560770696" />
-    <state width="763" height="462" key="GridCell.Tab.0.left" timestamp="1588560770696">
+    <state width="763" height="462" key="GridCell.Tab.0.left" timestamp="1588563889886">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1152" height="243" key="GridCell.Tab.0.left/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588343295714" />
-    <state width="838" height="232" key="GridCell.Tab.0.left/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588522946941" />
+    <state width="763" height="462" key="GridCell.Tab.0.left/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588563889886" />
     <state width="763" height="462" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1588560770696" />
-    <state width="763" height="462" key="GridCell.Tab.0.right" timestamp="1588560770696">
+    <state width="763" height="462" key="GridCell.Tab.0.right" timestamp="1588563889889">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1152" height="243" key="GridCell.Tab.0.right/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588343295716" />
-    <state width="838" height="232" key="GridCell.Tab.0.right/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588522946942" />
+    <state width="763" height="462" key="GridCell.Tab.0.right/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588563889889" />
     <state width="763" height="462" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1588560770696" />
     <state width="1152" height="243" key="GridCell.Tab.1.bottom" timestamp="1588343295720">
       <screen x="-1194" y="23" width="1194" height="811" />
@@ -395,7 +412,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/LatiaoAid$LatiaoAid2.coverage" NAME="LatiaoAid2 Coverage Results" MODIFIED="1588340817761" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/LatiaoAid$LatiaoAid.coverage" NAME="LatiaoAid Coverage Results" MODIFIED="1588520539365" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/LatiaoAid$LatiaoAid.coverage" NAME="LatiaoAid Coverage Results" MODIFIED="1588563644244" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/LatiaoAid$LatiaoAid1_0.coverage" NAME="LatiaoAid1.0 Coverage Results" MODIFIED="1588256518897" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
