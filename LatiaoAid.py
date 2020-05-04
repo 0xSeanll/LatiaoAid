@@ -11,7 +11,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 from Logger import Logger
 
-WEBDRIVER_PATH = '/usr/local/bin/geckodriver'
 BASE_URL = "https://passport.bilibili.com/login"
 BASE_TAB_LINK = "https://live.bilibili.com/528"
 
@@ -21,14 +20,14 @@ class LatiaoDisappearException(Exception):
 
 
 class LatiaoAid:
-    def __init__(self, headless=False, disable_image=False):
+    def __init__(self, headless=False, disable_image=False, geckodriver_path=""):
         options = webdriver.FirefoxOptions()
         if headless:
             options.add_argument('-headless')
         profile = webdriver.FirefoxProfile()
         if disable_image:
             profile.set_preference("permissions.default.image", 2)
-        self.driver = webdriver.Firefox(executable_path=WEBDRIVER_PATH, firefox_profile=profile, options=options)
+        self.driver = webdriver.Firefox(executable_path=geckodriver_path, firefox_profile=profile, options=options)
         self.base_tab = None  # The tab used to collect broadcast info. YJZ_CHANNEL
         self.loot_tab = None  # The tab where the code collect 辣条
 
@@ -97,10 +96,9 @@ class LatiaoAid:
         :return:
         """
         self.driver.get(BASE_URL)
-        qrcode_img = self.driver.find_element_by_xpath(
-            '/html/body/div[1]/div/div[2]/div[3]/div[1]/div').screenshot_as_png
-        img = Image.open(BytesIO(qrcode_img))
-        img.show()
+        qrcode = self.driver.find_element_by_xpath(
+            '//div[@class="qrcode-login"]').screenshot_as_png
+        Image.open(BytesIO(qrcode)).show()
         WebDriverWait(self.driver, 99999).until(ec.url_to_be("https://www.bilibili.com/"))
         Logger.print("恭喜你这个B站用户，登陆成功啦～")
 
@@ -137,7 +135,7 @@ class LatiaoAid:
         while True:
             try:
                 self.driver.find_element_by_xpath('//span[@class="icon-item icon-font icon-clear"]').click()
-            except ElementClickInterceptedException as _:
+            except ElementClickInterceptedException:
                 try:
                     # See if a popup blocks the button.
                     # This will happen if 主播勋章 upgrades, when A popup will show up.
@@ -148,8 +146,7 @@ class LatiaoAid:
                     Logger.err("clear_chat_history_panel()",
                                "It seems that some thing obscures the clear screen button. Retry in 10 seconds.")
                     sleep(10)
-                finally:
-                    continue
+                continue
             else:
                 break
 
@@ -256,7 +253,7 @@ class LatiaoAid:
                                 break
                             except StaleElementReferenceException as e:
                                 Logger.err("LOOP", "StaleElementReferenceException 不好了不好了！！", e)
-                                traceback.print_exc()
+                                Logger.print(traceback.format_exc())
                                 self.close_go_back()
                                 break
                             except TimeoutException as e:
@@ -267,12 +264,12 @@ class LatiaoAid:
                             except WebDriverException as e:
                                 # Unknown exceptions
                                 Logger.err("LOOP", "从来没见过的错误诶！", e)
-                                traceback.print_exc()
+                                Logger.print(traceback.format_exc())
                                 self.close_go_back()
                                 break
             except WebDriverException as e:
                 Logger.err("OUTER LOOP", "从来没见过的错误诶. 正在尝试恢复！.", e)
-                traceback.print_exc()
+                Logger.print(traceback.format_exc())
                 if len(self.driver.window_handles) == 2:
                     self.driver.execute_script("window.close()")
                     WebDriverWait(self.driver, 10).until(ec.number_of_windows_to_be(1))
@@ -280,9 +277,5 @@ class LatiaoAid:
                 self.load_base_tab()
                 continue
             finally:
-                self.driver.close()
-                Logger.print("Driver closed")
-
-
-if __name__ == '__main__':
-    LatiaoAid(headless=True, disable_image=True).main()
+                self.driver.quit()
+                Logger.print("LatiaoAid Terminated.")
