@@ -2,11 +2,7 @@
 
 ## Introduction
 
-The program enables automatic collecting bonus(辣条) on live.bilibili.com.
-
-Watching live using this program, 全区礼物广播 is listened. Upon receiving, the corresponding live channel is opened in a new tab and the waiting time for the bonus is obtained. If the waiting time is too long, the tab will be closed temporarily and the program will start timing and switch back to the live channel you watched. When it is almost time to claim the prize, the channel will be reopened, and the prize will be collected.
-
-**Note**: The website may require *some* users to do human-verification.
+This python script collects 辣条/亲密度 on live.bilibili.com using selenium webdriver.
 
 *Issues are warmly welcomed. Feel free to raise one if you found a bug, or have a great idea, or anything.*
 
@@ -80,9 +76,11 @@ This is a Pycharm project, so you can run it in Pycharm directly. Or to run with
 
 You will need login to bilibili.com manually (the script will bring up the login page or qrcode (in headless mode) for you).
 
-After logged in, the script will work automatically.  
+After logged in, the script will work automatically.
 
-## TODO list
+**Note**: The website may require *some* users to do human-verification. It is recommended use non-headless mode to test whether the script works properly first.
+
+## Todo
 
 - More sophisticated logic for waiting for and collecting Latiao.
 - GUI.
