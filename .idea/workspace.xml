@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c943f806-da08-4f95-9591-5ea973892eea" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LatiaoAid.py" beforeDir="false" afterPath="$PROJECT_DIR$/LatiaoAid.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +105,8 @@
       <workItem from="1588567504789" duration="160000" />
       <workItem from="1588567695913" duration="237000" />
       <workItem from="1588569310408" duration="1423000" />
-      <workItem from="1588570977246" duration="1387000" />
+      <workItem from="1588570977246" duration="2044000" />
+      <workItem from="1588588806959" duration="271000" />
     </task>
     <task id="LOCAL-00001" summary="First commit. Ver 1.0">
       <created>1587927281089</created>
@@ -317,7 +318,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588572103873</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Update gitignore">
+      <created>1588572414314</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1588572414314</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -328,7 +336,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
@@ -353,14 +363,14 @@
     <MESSAGE value="Headless support beta.&#10;Images blocking.&#10;Stability and performance improvements." />
     <MESSAGE value="Update dependencies" />
     <MESSAGE value="Add run.py" />
-    <MESSAGE value="Update gitignore" />
     <MESSAGE value="add requirements.txt" />
     <MESSAGE value="Update README.md" />
     <MESSAGE value="fix format of block quote" />
     <MESSAGE value="Update README" />
     <MESSAGE value="Instantiate Logger" />
     <MESSAGE value="Improve logs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improve logs" />
+    <MESSAGE value="Update gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update gitignore" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -390,12 +400,12 @@
     </state>
     <state x="-859" y="182" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1587956826597" />
     <state x="404" y="195" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588562692764" />
-    <state x="-1014" y="23" key="CommitChangelistDialog2" timestamp="1588572103706">
+    <state x="-1014" y="23" key="CommitChangelistDialog2" timestamp="1588572414166">
       <screen x="-1194" y="23" width="1194" height="811" />
     </state>
     <state x="217" y="0" key="CommitChangelistDialog2/-1194.0.1194.834/0.0.1440.900@0.0.1440.900" timestamp="1588524140795" />
     <state x="217" y="23" key="CommitChangelistDialog2/-1194.0.1194.834/0.23.1440.877@0.23.1440.877" timestamp="1588524598328" />
-    <state x="-1014" y="23" key="CommitChangelistDialog2/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588572103706" />
+    <state x="-1014" y="23" key="CommitChangelistDialog2/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588572414166" />
     <state x="217" y="23" key="CommitChangelistDialog2/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588566901660" />
     <state x="58" y="60" key="DiffContextDialog" timestamp="1588564790400">
       <screen x="0" y="23" width="1440" height="877" />
@@ -462,10 +472,10 @@
     <state x="238" y="180" key="Vcs.Push.Dialog.v2/-1194.0.1194.834/0.23.1440.877@0.23.1440.877" timestamp="1588524608276" />
     <state x="-997" y="168" key="Vcs.Push.Dialog.v2/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588571612755" />
     <state x="238" y="180" key="Vcs.Push.Dialog.v2/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588566463419" />
-    <state x="275" y="297" key="com.intellij.ide.util.TipDialog" timestamp="1588570978206">
+    <state x="275" y="297" key="com.intellij.ide.util.TipDialog" timestamp="1588588983488">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="275" y="297" key="com.intellij.ide.util.TipDialog/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588570978206" />
+    <state x="275" y="297" key="com.intellij.ide.util.TipDialog/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588588983488" />
     <state x="274" y="261" key="com.intellij.ide.util.TipDialog/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588567695922" />
     <state x="274" y="261" key="com.intellij.ide.util.TipDialog/0.23.1440.877@0.23.1440.877" timestamp="1588387125343" />
     <state x="-814" y="352" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1588571560563">

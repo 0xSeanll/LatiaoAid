@@ -57,8 +57,10 @@ class LatiaoAid:
         self.driver.get(BASE_TAB_LINK)
         while True:
             try:
-                WebDriverWait(self.driver, 10).until(
-                    ec.presence_of_element_located((By.XPATH, '//div[@class="chat-history-panel"]')))
+                # Delete JS player
+                element = WebDriverWait(self.driver, 10).until(
+                    ec.presence_of_element_located((By.XPATH, '//div[@class=""bilibili-live-player relative""]')))
+                self.delete_element(element)
                 element = WebDriverWait(self.driver, 10).until(
                     ec.presence_of_element_located((By.XPATH, '//div[@id="chat-draw-area-vm"]')))
                 self.delete_element(element)
@@ -66,6 +68,8 @@ class LatiaoAid:
                     ec.presence_of_element_located(
                         (By.XPATH, '//div[@data-upgrade-intro="Follow"]//div[@class="side-bar-btn-cntr"]')))
                 element.click()
+                WebDriverWait(self.driver, 10).until(
+                    ec.presence_of_element_located((By.XPATH, '//div[@class="chat-history-panel"]')))
             except TimeoutError:
                 self.logger.err("login()", "Failed to load channel 528")
                 self.driver.get(BASE_TAB_LINK)
