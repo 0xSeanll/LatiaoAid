@@ -94,6 +94,7 @@ class LatiaoAid:
         :return: A none duplicate list of links of loot tabs.
         """
         links = []
+        self.logger.caster = 'MAIN'
         self.logger.log("等待辣条中...")
         while True:
             latiaos = self.driver.find_elements_by_xpath('//div[@class="chat-item  system-msg border-box"]')
