@@ -3,7 +3,7 @@ from datetime import datetime
 
 class Logger:
     def __init__(self, print_to_console=False, log_path='log.txt'):
-        self.caster = None
+        self.caster = "MAIN"
         self.print_to_console = print_to_console
         self.log_path = log_path
 

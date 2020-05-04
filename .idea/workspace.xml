@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c943f806-da08-4f95-9591-5ea973892eea" name="Default Changelist" comment="">
+    <list default="true" id="c943f806-da08-4f95-9591-5ea973892eea" name="Default Changelist" comment="Instantiate Logger">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LatiaoAid.py" beforeDir="false" afterPath="$PROJECT_DIR$/LatiaoAid.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/Logger.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +106,8 @@
       <workItem from="1588561475989" duration="5851000" />
       <workItem from="1588567504789" duration="160000" />
       <workItem from="1588567695913" duration="237000" />
-      <workItem from="1588569310408" duration="1232000" />
+      <workItem from="1588569310408" duration="1423000" />
+      <workItem from="1588570977246" duration="565000" />
     </task>
     <task id="LOCAL-00001" summary="First commit. Ver 1.0">
       <created>1587927281089</created>
@@ -296,7 +298,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588566901820</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Instantiate Logger">
+      <created>1588570592127</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1588570592127</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -326,7 +335,8 @@
     <MESSAGE value="Update README.md" />
     <MESSAGE value="fix format of block quote" />
     <MESSAGE value="Update README" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update README" />
+    <MESSAGE value="Instantiate Logger" />
+    <option name="LAST_COMMIT_MESSAGE" value="Instantiate Logger" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -356,12 +366,12 @@
     </state>
     <state x="-859" y="182" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1587956826597" />
     <state x="404" y="195" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588562692764" />
-    <state x="217" y="23" key="CommitChangelistDialog2" timestamp="1588566901660">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state x="-1014" y="23" key="CommitChangelistDialog2" timestamp="1588570732768">
+      <screen x="-1194" y="23" width="1194" height="811" />
     </state>
     <state x="217" y="0" key="CommitChangelistDialog2/-1194.0.1194.834/0.0.1440.900@0.0.1440.900" timestamp="1588524140795" />
     <state x="217" y="23" key="CommitChangelistDialog2/-1194.0.1194.834/0.23.1440.877@0.23.1440.877" timestamp="1588524598328" />
-    <state x="-1014" y="23" key="CommitChangelistDialog2/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588565834225" />
+    <state x="-1014" y="23" key="CommitChangelistDialog2/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588570732768" />
     <state x="217" y="23" key="CommitChangelistDialog2/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588566901660" />
     <state x="58" y="60" key="DiffContextDialog" timestamp="1588564790400">
       <screen x="0" y="23" width="1440" height="877" />
@@ -411,9 +421,10 @@
     </state>
     <state width="1152" height="243" key="GridCell.Tab.1.right/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588343295719" />
     <state width="1398" height="268" key="GridCell.Tab.1.right/0.23.1440.877@0.23.1440.877" timestamp="1588266488387" />
-    <state x="415" y="139" key="RollbackChangesDialog" timestamp="1588564801442">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state x="-850" y="130" key="RollbackChangesDialog" timestamp="1588570726399">
+      <screen x="-1194" y="23" width="1194" height="811" />
     </state>
+    <state x="-850" y="130" key="RollbackChangesDialog/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588570726399" />
     <state x="415" y="139" key="RollbackChangesDialog/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588564801442" />
     <state x="156" y="82" key="SettingsEditor" timestamp="1588567811567">
       <screen x="0" y="23" width="1440" height="877" />
@@ -427,16 +438,16 @@
     <state x="238" y="180" key="Vcs.Push.Dialog.v2/-1194.0.1194.834/0.23.1440.877@0.23.1440.877" timestamp="1588524608276" />
     <state x="-997" y="168" key="Vcs.Push.Dialog.v2/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588565850804" />
     <state x="238" y="180" key="Vcs.Push.Dialog.v2/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588566463419" />
-    <state x="275" y="297" key="com.intellij.ide.util.TipDialog" timestamp="1588569335281">
+    <state x="275" y="297" key="com.intellij.ide.util.TipDialog" timestamp="1588570978206">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="275" y="297" key="com.intellij.ide.util.TipDialog/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588569335281" />
+    <state x="275" y="297" key="com.intellij.ide.util.TipDialog/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588570978206" />
     <state x="274" y="261" key="com.intellij.ide.util.TipDialog/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588567695922" />
     <state x="274" y="261" key="com.intellij.ide.util.TipDialog/0.23.1440.877@0.23.1440.877" timestamp="1588387125343" />
-    <state x="-814" y="352" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1587927790302">
+    <state x="-814" y="352" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1588571560563">
       <screen x="-1194" y="23" width="1194" height="811" />
     </state>
-    <state x="-814" y="352" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1587927790302" />
+    <state x="-814" y="352" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588571560563" />
     <state x="365" y="244" key="git4idea.merge.GitPullDialog" timestamp="1588524796620">
       <screen x="0" y="23" width="1440" height="877" />
     </state>

@@ -16,8 +16,8 @@ BASE_TAB_LINK = "https://live.bilibili.com/528"
 
 
 class LatiaoAid:
-    def __init__(self, headless=False, disable_image=False, geckodriver_path=""):
-        self.logger = Logger()
+    def __init__(self, headless=False, disable_image=False, geckodriver_path="", logger=None):
+        self.logger = Logger() if logger is None else logger
         options = webdriver.FirefoxOptions()
         if headless:
             options.add_argument('-headless')
@@ -94,11 +94,13 @@ class LatiaoAid:
         :return: A none duplicate list of links of loot tabs.
         """
         links = []
+        self.logger.log("等待辣条中...")
         while True:
             latiaos = self.driver.find_elements_by_xpath('//div[@class="chat-item  system-msg border-box"]')
             if len(latiaos) != 0:  # Found
                 break
             sleep(5)
+        self.logger.log("发现辣条！！！")
         for latiao in latiaos:
             try:
                 link = latiao.find_element_by_tag_name('a').get_attribute('href')
