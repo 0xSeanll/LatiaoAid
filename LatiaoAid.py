@@ -15,12 +15,9 @@ BASE_URL = "https://passport.bilibili.com/login"
 BASE_TAB_LINK = "https://live.bilibili.com/528"
 
 
-class LatiaoDisappearException(Exception):
-    pass
-
-
 class LatiaoAid:
     def __init__(self, headless=False, disable_image=False, geckodriver_path=""):
+        self.logger = Logger()
         options = webdriver.FirefoxOptions()
         if headless:
             options.add_argument('-headless')
@@ -28,6 +25,7 @@ class LatiaoAid:
         if disable_image:
             profile.set_preference("permissions.default.image", 2)
         self.driver = webdriver.Firefox(executable_path=geckodriver_path, firefox_profile=profile, options=options)
+        self.logger.log("Firefox Launched")
         self.base_tab = None  # The tab used to collect broadcast info. YJZ_CHANNEL
         self.loot_tab = None  # The tab where the code collect 辣条
 
@@ -38,20 +36,6 @@ class LatiaoAid:
         """
         self.driver.execute_script("window.close()")
         WebDriverWait(self.driver, 10).until(ec.number_of_windows_to_be(1))
-        self.driver.switch_to.window(self.base_tab)
-
-    def to_loot_tab(self):
-        """
-        Switch to loot tab.
-        :return:
-        """
-        self.driver.switch_to.window(self.loot_tab)
-
-    def to_base_tab(self):
-        """
-        Switch to base tab
-        :return:
-        """
         self.driver.switch_to.window(self.base_tab)
 
     def delete_element(self, element):
@@ -83,7 +67,7 @@ class LatiaoAid:
                         (By.XPATH, '//div[@data-upgrade-intro="Follow"]//div[@class="side-bar-btn-cntr"]')))
                 element.click()
             except TimeoutError:
-                Logger.err("login()", "Failed to load channel 528")
+                self.logger.err("login()", "Failed to load channel 528")
                 self.driver.get(BASE_TAB_LINK)
                 continue
             else:
@@ -99,8 +83,9 @@ class LatiaoAid:
         qrcode = self.driver.find_element_by_xpath(
             '//div[@class="qrcode-login"]').screenshot_as_png
         Image.open(BytesIO(qrcode)).show()
+        self.logger.log("等待亲爱的B站用户登陆～！")
         WebDriverWait(self.driver, 99999).until(ec.url_to_be("https://www.bilibili.com/"))
-        Logger.print("恭喜你这个B站用户，登陆成功啦～")
+        self.logger.log("恭喜你这个B站用户，登陆成功啦～！")
 
     def wait_for_present(self):
         """
@@ -143,8 +128,8 @@ class LatiaoAid:
                     self.delete_element(shit)
                 except NoSuchElementException:
                     # Some other things that block the button. Require human involvement.
-                    Logger.err("clear_chat_history_panel()",
-                               "It seems that some thing obscures the clear screen button. Retry in 10 seconds.")
+                    self.logger.err("clear_chat_history_panel()",
+                                    "清除历史弹幕按钮被遮挡了呢！！ 10 秒钟之后重试！！")
                     sleep(10)
                 continue
             else:
@@ -190,7 +175,7 @@ class LatiaoAid:
                 return
             if second > 5:
                 self.close_go_back()
-                Logger.log(f"等 {second - 5} 秒再来")
+                self.logger.log(f"等 {second - 5} 秒再来")
                 sleep(second - 5)
                 self.load_loot_tab(link)
             return
@@ -209,7 +194,7 @@ class LatiaoAid:
             try:
                 element.click()
                 break
-            except ElementClickInterceptedException as e:
+            except ElementClickInterceptedException:
                 # A feedback window obscures the button.
                 bingos = self.driver.find_elements_by_xpath('//div[@class="draw-bingo-cntr draw-bingo-cntr"]')
                 bingos += self.driver.find_elements_by_xpath('//div[@class="draw-bottom"]')
@@ -222,7 +207,7 @@ class LatiaoAid:
         loot = "辣条" if "赠送" in sender_info_text else \
             "辣条" if "赢得大乱斗PK胜利" in sender_info_text else \
                 "亲密度" if "上任" in sender_info_text else "不知道什么东西"
-        Logger.log(f'{sender_info_text} {loot}到手')
+        self.logger.log(f'{sender_info_text} {loot}到手')
 
     def main(self):
         self.login()
@@ -235,41 +220,41 @@ class LatiaoAid:
                         try:
                             self.load_loot_tab(link)
                         except TimeoutException:
-                            Logger.err("load_new_tab", "这个直播间好像加载的有点慢呢" + link)
+                            self.logger.err("load_new_tab", "这个直播间好像加载的有点慢呢" + link)
                             self.close_go_back()
                             continue
-                        Logger.caster = \
+                        self.logger.caster = \
                             self.driver.find_element_by_xpath('//a[starts-with(@class, "room-owner-username")]').text
-                        Logger.log("白嫖启动")
+                        self.logger.log("白嫖启动")
                         while True:
                             try:
                                 self.wait_for_countdown(link)
                                 self.collect()
                             except NoSuchElementException:
                                 # No loot remains.
-                                Logger.log("白嫖结束")
+                                self.logger.log("白嫖结束")
                                 sleep(1)
                                 self.close_go_back()
                                 break
                             except StaleElementReferenceException as e:
-                                Logger.err("LOOP", "StaleElementReferenceException 不好了不好了！！", e)
-                                Logger.print(traceback.format_exc())
+                                self.logger.err("LOOP", "StaleElementReferenceException 不好了不好了！！", e)
+                                self.logger.print(traceback.format_exc())
                                 self.close_go_back()
                                 break
-                            except TimeoutException as e:
+                            except TimeoutException:
                                 # Failed to load page, or loot window magically disappear
-                                Logger.err("LOOP", "诶！辣条怎么没了呢？！")
+                                self.logger.err("LOOP", "诶！辣条怎么没了呢？！")
                                 self.close_go_back()
                                 break
                             except WebDriverException as e:
                                 # Unknown exceptions
-                                Logger.err("LOOP", "从来没见过的错误诶！", e)
-                                Logger.print(traceback.format_exc())
+                                self.logger.err("LOOP", "从来没见过的错误诶！", e)
+                                self.logger.print(traceback.format_exc())
                                 self.close_go_back()
                                 break
             except WebDriverException as e:
-                Logger.err("OUTER LOOP", "从来没见过的错误诶. 正在尝试恢复！.", e)
-                Logger.print(traceback.format_exc())
+                self.logger.err("OUTER LOOP", "从来没见过的错误诶. 正在尝试恢复！.", e)
+                self.logger.print(traceback.format_exc())
                 if len(self.driver.window_handles) == 2:
                     self.driver.execute_script("window.close()")
                     WebDriverWait(self.driver, 10).until(ec.number_of_windows_to_be(1))
@@ -278,4 +263,4 @@ class LatiaoAid:
                 continue
             finally:
                 self.driver.quit()
-                Logger.print("LatiaoAid Terminated.")
+                self.logger.log("LatiaoAid Terminated.")
