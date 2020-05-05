@@ -1,5 +1,7 @@
 # LatiaoAid 1.3
 
+![](https://github.com/0xSeanll/LatiaoAid/workflows/LatiaoAid/badge.svg)
+
 ## Introduction
 
 This python script collects 辣条/亲密度 on live.bilibili.com using selenium webdriver.
