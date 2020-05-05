@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import traceback
 from io import BytesIO
 from time import sleep
@@ -91,6 +93,8 @@ class LatiaoAid:
         self.driver.get(BASE_URL)
         qrcode = self.driver.find_element_by_xpath(
             '//div[@class="qrcode-login"]').screenshot_as_png
+        with open('qrcode.png', 'wb') as f:
+            f.write(qrcode)
         Image.open(BytesIO(qrcode)).show()
         self.logger.log("等待亲爱的B站用户登陆～！")
         WebDriverWait(self.driver, 99999).until(ec.url_to_be("https://www.bilibili.com/"))

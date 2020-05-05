@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from LatiaoAid import LatiaoAid
 from Logger import Logger
 

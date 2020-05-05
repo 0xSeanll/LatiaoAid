@@ -55,7 +55,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Console Font" />
+    <property name="settings.editor.selected.configurable" value="copyright" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -110,7 +110,7 @@
       <workItem from="1588570977246" duration="2044000" />
       <workItem from="1588588806959" duration="993000" />
       <workItem from="1588590385601" duration="1856000" />
-      <workItem from="1588648022435" duration="2001000" />
+      <workItem from="1588648022435" duration="2545000" />
     </task>
     <task id="LOCAL-00001" summary="First commit. Ver 1.0">
       <created>1587927281089</created>
@@ -343,7 +343,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588591064564</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Minor upgrades">
+      <created>1588653715161</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1588653715161</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -363,7 +370,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Reformated the code.&#10;Added trivial logger.&#10;Enhanced exceptions handling." />
     <MESSAGE value="Refined logger, code format, and logics." />
     <MESSAGE value="Catch StaleElementReferenceException" />
     <MESSAGE value="Wait for the obstacle to disappear" />
@@ -388,7 +394,8 @@
     <MESSAGE value="Update gitignore" />
     <MESSAGE value="Delete player on base tab" />
     <MESSAGE value="Enrich logs." />
-    <option name="LAST_COMMIT_MESSAGE" value="Enrich logs." />
+    <MESSAGE value="Minor upgrades" />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor upgrades" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -418,17 +425,19 @@
     </state>
     <state x="-859" y="182" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1587956826597" />
     <state x="404" y="195" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588562692764" />
-    <state x="-1014" y="23" key="CommitChangelistDialog2" timestamp="1588591064376">
-      <screen x="-1194" y="23" width="1194" height="811" />
+    <state x="217" y="23" key="CommitChangelistDialog2" timestamp="1588653714946">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="217" y="0" key="CommitChangelistDialog2/-1194.0.1194.834/0.0.1440.900@0.0.1440.900" timestamp="1588524140795" />
     <state x="217" y="23" key="CommitChangelistDialog2/-1194.0.1194.834/0.23.1440.877@0.23.1440.877" timestamp="1588524598328" />
     <state x="-1014" y="23" key="CommitChangelistDialog2/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588591064376" />
     <state x="217" y="23" key="CommitChangelistDialog2/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588566901660" />
-    <state x="58" y="60" key="DiffContextDialog" timestamp="1588564790400">
+    <state x="217" y="23" key="CommitChangelistDialog2/0.23.1440.877@0.23.1440.877" timestamp="1588653714946" />
+    <state x="58" y="60" key="DiffContextDialog" timestamp="1588653697074">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="58" y="60" key="DiffContextDialog/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588564790400" />
+    <state x="58" y="60" key="DiffContextDialog/0.23.1440.877@0.23.1440.877" timestamp="1588653697074" />
     <state width="1398" height="231" key="GridCell.Tab.0.bottom" timestamp="1588649615591">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
@@ -478,18 +487,20 @@
     </state>
     <state x="-850" y="130" key="RollbackChangesDialog/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588570726399" />
     <state x="415" y="139" key="RollbackChangesDialog/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588564801442" />
-    <state x="156" y="82" key="SettingsEditor" timestamp="1588567811567">
+    <state x="156" y="82" key="SettingsEditor" timestamp="1588656741478">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="-1096" y="67" key="SettingsEditor/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588213480702" />
     <state x="156" y="82" key="SettingsEditor/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588567811567" />
-    <state x="-997" y="168" key="Vcs.Push.Dialog.v2" timestamp="1588589416429">
-      <screen x="-1194" y="23" width="1194" height="811" />
+    <state x="156" y="82" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1588656741478" />
+    <state x="238" y="180" key="Vcs.Push.Dialog.v2" timestamp="1588653723428">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="238" y="161" key="Vcs.Push.Dialog.v2/-1194.0.1194.834/0.0.1440.900@0.0.1440.900" timestamp="1588524149896" />
     <state x="238" y="180" key="Vcs.Push.Dialog.v2/-1194.0.1194.834/0.23.1440.877@0.23.1440.877" timestamp="1588524608276" />
     <state x="-997" y="168" key="Vcs.Push.Dialog.v2/-1194.23.1194.811/0.23.1440.877@-1194.23.1194.811" timestamp="1588589416429" />
     <state x="238" y="180" key="Vcs.Push.Dialog.v2/-1194.23.1194.811/0.23.1440.877@0.23.1440.877" timestamp="1588566463419" />
+    <state x="238" y="180" key="Vcs.Push.Dialog.v2/0.23.1440.877@0.23.1440.877" timestamp="1588653723428" />
     <state x="274" y="261" key="com.intellij.ide.util.TipDialog" timestamp="1588648023323">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
