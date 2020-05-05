@@ -12,7 +12,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from Logger import Logger
 
 BASE_URL = "https://passport.bilibili.com/login"
-BASE_TAB_LINK = "https://live.bilibili.com/528"
+BASE_TAB_LINK = "https://live.bilibili.com/22198526"
 
 
 class LatiaoAid:
@@ -103,7 +103,6 @@ class LatiaoAid:
         :return: A none duplicate list of links of loot tabs.
         """
         links = []
-        self.logger.caster = 'MAIN'
         self.logger.log("等待辣条中...")
         while True:
             latiaos = self.driver.find_elements_by_xpath('//div[@class="chat-item  system-msg border-box"]')
@@ -202,70 +201,79 @@ class LatiaoAid:
             pass
         sender_info_text = str(self.driver.find_element_by_xpath('//div[@class="gift-sender-info"]').text)
 
+        bingos = self.driver.find_elements_by_xpath('//div[@class="draw-bingo-cntr draw-bingo-cntr"]')
+        bingos += self.driver.find_elements_by_xpath('//div[@class="draw-bottom"]')
+        for bingo in bingos:
+            try:
+                self.delete_element(bingo)
+            except StaleElementReferenceException:
+                pass
+
         while True:
             try:
                 element.click()
                 break
             except ElementClickInterceptedException:
-                # A feedback window obscures the button.
-                bingos = self.driver.find_elements_by_xpath('//div[@class="draw-bingo-cntr draw-bingo-cntr"]')
-                bingos += self.driver.find_elements_by_xpath('//div[@class="draw-bottom"]')
-                for bingo in bingos:
-                    try:
-                        self.delete_element(bingo)
-                    except StaleElementReferenceException:
-                        continue
-                continue
+                self.logger.print(traceback.format_exc())
+                return
+            except StaleElementReferenceException:
+                self.logger.print(traceback.format_exc())
+                return
         loot = "辣条" if "赠送" in sender_info_text else \
             "辣条" if "赢得大乱斗PK胜利" in sender_info_text else \
                 "亲密度" if "上任" in sender_info_text else "不知道什么东西"
         self.logger.log(f'{sender_info_text} {loot}到手')
 
+    def main_loop(self):
+        while True:
+            self.logger.caster = 'MAIN_LOOP'
+            links = self.wait_for_present()
+            for link in links:
+                try:
+                    self.load_loot_tab(link)
+                except TimeoutException:
+                    self.logger.err("load_new_tab", "这个直播间好像加载的有点慢呢" + link)
+                    self.close_go_back()
+                    continue
+                self.logger.caster = \
+                    self.driver.find_element_by_xpath('//a[starts-with(@class, "room-owner-username")]').text
+                self.logger.log("白嫖启动")
+                while True:
+                    try:
+                        self.wait_for_countdown(link)
+                        self.collect()
+                    except NoSuchElementException:
+                        # No loot remains.
+                        self.logger.log("白嫖结束")
+                        sleep(1)
+                        self.close_go_back()
+                        break
+                    except StaleElementReferenceException as e:
+                        self.logger.err("MAIN_LOOP", "不好了不好了！！")
+                        self.logger.print(traceback.format_exc())
+                        self.close_go_back()
+                        break
+                    except TimeoutException:
+                        # Failed to load page, or loot window magically disappear
+                        self.logger.err("MAIN_LOOP", "诶！辣条怎么没了呢？！")
+                        self.close_go_back()
+                        break
+                    except WebDriverException as e:
+                        # Unknown exceptions
+                        self.logger.err("MAIN_LOOP", "从来没见过的错误诶！")
+                        self.logger.print(traceback.format_exc())
+                        self.close_go_back()
+                        break
+
     def main(self):
+        self.logger.caster = "MAIN"
         self.login()
         self.load_base_tab()
         while True:
             try:
-                while True:
-                    links = self.wait_for_present()
-                    for link in links:
-                        try:
-                            self.load_loot_tab(link)
-                        except TimeoutException:
-                            self.logger.err("load_new_tab", "这个直播间好像加载的有点慢呢" + link)
-                            self.close_go_back()
-                            continue
-                        self.logger.caster = \
-                            self.driver.find_element_by_xpath('//a[starts-with(@class, "room-owner-username")]').text
-                        self.logger.log("白嫖启动")
-                        while True:
-                            try:
-                                self.wait_for_countdown(link)
-                                self.collect()
-                            except NoSuchElementException:
-                                # No loot remains.
-                                self.logger.log("白嫖结束")
-                                sleep(1)
-                                self.close_go_back()
-                                break
-                            except StaleElementReferenceException as e:
-                                self.logger.err("LOOP", "StaleElementReferenceException 不好了不好了！！", e)
-                                self.logger.print(traceback.format_exc())
-                                self.close_go_back()
-                                break
-                            except TimeoutException:
-                                # Failed to load page, or loot window magically disappear
-                                self.logger.err("LOOP", "诶！辣条怎么没了呢？！")
-                                self.close_go_back()
-                                break
-                            except WebDriverException as e:
-                                # Unknown exceptions
-                                self.logger.err("LOOP", "从来没见过的错误诶！", e)
-                                self.logger.print(traceback.format_exc())
-                                self.close_go_back()
-                                break
+                self.main_loop()
             except WebDriverException as e:
-                self.logger.err("OUTER LOOP", "从来没见过的错误诶. 正在尝试恢复！.", e)
+                self.logger.err("MAIN", "从来没见过的错误诶. 正在尝试恢复！.", e)
                 self.logger.print(traceback.format_exc())
                 try:
                     if len(self.driver.window_handles) == 2:
@@ -275,7 +283,7 @@ class LatiaoAid:
                     self.load_base_tab()
                     continue
                 except Exception as e:
-                    self.logger.err("RCOVERY", "恢复失败. 程序即将退出.", e)
+                    self.logger.err("RECOVERY", "恢复失败. 程序即将退出.", e)
                     self.logger.print(traceback.format_exc())
                     self.driver.quit()
                     self.logger.log("LatiaoAid Terminated.")
