@@ -1,6 +1,6 @@
 # LatiaoAid 1.3
 
-![](https://github.com/0xSeanll/LatiaoAid/workflows/LatiaoAid/badge.svg)
+![Github Action Badge](https://github.com/0xSeanll/LatiaoAid/workflows/LatiaoAid/badge.svg)
 
 ## Introduction
 
@@ -59,13 +59,13 @@ pip install -r requirements.txt
 You may want to use virtual environment.
 
 ```shell script
-virtualenv LatiaoAidVenv --python=python3.7
-cd LatiaoAidVenv
-source bin/activate
-git clone git@github.com:0xSeanll/LatiaoAid.git
-cd LatiaoAid
-pip install -r requirements.txt
-python3 run.py
+$ virtualenv LatiaoAidVenv --python=python3.7
+$ cd LatiaoAidVenv
+$ source bin/activate
+$ git clone git@github.com:0xSeanll/LatiaoAid.git
+$ cd LatiaoAid
+$ pip install -r requirements.txt
+$ python3 run.py
 ```
 
 ## Usage

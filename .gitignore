@@ -4,3 +4,4 @@ __pycache__/
 /venv/
 /nohup.out
 /qrcode.png
+/.idea/workspace.xml
