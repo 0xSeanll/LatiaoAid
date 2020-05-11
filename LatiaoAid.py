@@ -13,11 +13,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 from Logger import Logger
 
-BASE_URL = "https://passport.bilibili.com/login"
-BASE_TAB_LINK = "https://live.bilibili.com/22198526"
-
 
 class LatiaoAid:
+    base_url = "https://passport.bilibili.com/login"
+    base_tab_link = "https://live.bilibili.com/22198526"
+
     def __init__(self, headless=False, disable_image=False, geckodriver_path="", logger=None):
         self.logger = Logger() if logger is None else logger
         options = webdriver.FirefoxOptions()
@@ -30,6 +30,7 @@ class LatiaoAid:
         self.logger.log("Firefox Launched")
         self.base_tab = None  # The tab used to collect broadcast info. YJZ_CHANNEL
         self.loot_tab = None  # The tab where the code collect 辣条
+        self.qrcode = None  # The login qrcode
 
     def close_go_back(self):
         """
@@ -57,7 +58,7 @@ class LatiaoAid:
         :return:
         """
         self.logger.log("开始加载 Base Tab")
-        self.driver.get(BASE_TAB_LINK)
+        self.driver.get(LatiaoAid.base_tab_link)
         while True:
             try:
                 # Delete JS player
@@ -79,7 +80,7 @@ class LatiaoAid:
                 self.logger.log("Base Tab 加载成功～")
             except TimeoutError:
                 self.logger.err("login()", "Failed to load channel 528")
-                self.driver.get(BASE_TAB_LINK)
+                self.driver.get(LatiaoAid.base_tab_link)
                 continue
             else:
                 break
@@ -90,12 +91,13 @@ class LatiaoAid:
         Bring up login page and wait for a human to login.
         :return:
         """
-        self.driver.get(BASE_URL)
+        self.driver.get(LatiaoAid.base_url)
         qrcode = self.driver.find_element_by_xpath(
             '//div[@class="qrcode-login"]').screenshot_as_png
         with open('qrcode.png', 'wb') as f:
             f.write(qrcode)
-        Image.open(BytesIO(qrcode)).show()
+        self.qrcode = Image.open(BytesIO(qrcode))
+        self.qrcode.show()
         self.logger.log("等待亲爱的B站用户登陆～！")
         WebDriverWait(self.driver, 99999).until(ec.url_to_be("https://www.bilibili.com/"))
         self.logger.log("恭喜你这个B站用户，登陆成功啦～！")
@@ -121,8 +123,8 @@ class LatiaoAid:
                     links.append(link)
             except NoSuchElementException:
                 # The Latiao is in base_tab channel.
-                if BASE_TAB_LINK not in links:
-                    links.append(BASE_TAB_LINK)
+                if LatiaoAid.base_tab_link not in links:
+                    links.append(LatiaoAid.base_tab_link)
                 continue
         self.clear_chat_history_panel()
         return links
@@ -291,3 +293,7 @@ class LatiaoAid:
                     self.logger.print(traceback.format_exc())
                     self.driver.quit()
                     self.logger.log("LatiaoAid Terminated.")
+
+    def __del__(self):
+        self.driver.close()
+        self.qrcode.close()

@@ -46,38 +46,46 @@ An ugly, yet stable release. 99.9% exceptions are handled, enabling it to be dep
 
 ## Dependencies
 
+Firstly, You need browsers that support selenium. See [documentations of selenium](https://selenium-python.readthedocs.io/installation.html#drivers) for more details. The default browser used in this project is Firefox. You can use other browsers, but you need to modify `class LatiaoAid`.
+
+Then, you have to install some other dependencies:
 - Python 3.7
 - Firefox browser
 - Pillow==7.1.2
 - selenium==3.141.0
 - urllib3==1.25.9
 
+Job can be done easily with:
+ 
 ```shell script
 pip install -r requirements.txt
 ```
 
-You may want to use virtual environment.
+Or you may want to use virtual environment.
 
 ```shell script
-$ virtualenv LatiaoAidVenv --python=python3.7
-$ cd LatiaoAidVenv
-$ source bin/activate
-$ git clone git@github.com:0xSeanll/LatiaoAid.git
-$ cd LatiaoAid
-$ pip install -r requirements.txt
-$ python3 run.py
+virtualenv LatiaoAidVenv --python=python3.7
+cd LatiaoAidVenv
+source bin/activate
+git clone git@github.com:0xSeanll/LatiaoAid.git
+cd LatiaoAid
+pip install -r requirements.txt
 ```
+
+Then you can use LatiaoAid freely.
 
 ## Usage
 
-You need browsers that support selenium. See [documentations of selenium](https://selenium-python.readthedocs.io/installation.html#drivers) for more details. The default browser used in this project is Firefox. You can use other browsers, but you need to modify `class LatiaoAid`.
- 
-Before running, check the parameters in `run.py`.
+### Step1. start the script
 
-This is a Pycharm project, so you can run it in Pycharm directly. Or to run with python3, run `python3 run.py`.
+You can run it in console and ```python3 console_run.py``` will do the job, or use ```python3 console_run.py -h``` to get help information if you want to sepcified some parameters.
 
+Besides, this is a Pycharm project, so you can also run it in Pycharm directly.
+
+### Step2. login to bilibili.com
 You will need login to bilibili.com manually (the script will bring up the login page or qrcode (in headless mode) for you).
 
+### Step3. wait for latiao! 
 After logged in, the script will work automatically.
 
 **Note**: The website may require *some* users to do human-verification. It is recommended use non-headless mode to test whether the script works properly first.
