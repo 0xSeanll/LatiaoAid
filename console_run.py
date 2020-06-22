@@ -80,6 +80,10 @@ def check_args(args: argparse.Namespace):
         warnings.warn(f"Unable to find the log:{args.log_path}, create it now")
         with open(args.log_path, "w") as f:
             f.write("")
+    if 0 < args.second + args.minute * 60 < 60:
+        warnings.warn(
+            f"设置程序倒计时停止时间为{args.second + args.minute * 60}秒，在如此短的时间内可能无法获取足够的辣条."
+        )
 
 
 def run_LatiaoAid_main(args: argparse.Namespace):
@@ -93,50 +97,13 @@ def run_LatiaoAid_main(args: argparse.Namespace):
         geckodriver_path=args.driver_path,
         headless=args.headless,
         disable_image=args.disable_image,
+        seconds_before_exit=args.second + args.minute * 60,
         logger=Logger(
             print_to_console=not args.silent,
             print_to_log=args.log,
             log_path=args.log_path,
         ),
     ).main()
-
-
-def exit_timer(seconds_before_exit: int) -> callable:
-    """
-    decorator with parameter
-    :param seconds_before_exit: If not larger than 0, timer will be cancelled.
-                                Otherwise, function will exit after the specified time(in second)
-    :return: decorator
-    """
-    if seconds_before_exit <= 0:
-        # do nothing
-        def decorator(f):
-            return f
-
-    else:
-        # set a timer
-        def decorator(f):
-            def handler(signum, frame):
-                print(f"[{datetime.now().__str__()}] 已经到预订的终止时间啦，程序终止 (゜-゜)つロ ")
-                exit(0)
-
-            def new_f(*args, **kwargs):
-                old = signal.signal(signal.SIGALRM, handler)
-                signal.alarm(seconds_before_exit)
-                try:
-                    f(*args, **kwargs)
-                finally:
-                    signal.signal(signal.SIGALRM, old)
-                    signal.alarm(0)
-
-            print(
-                f"[{datetime.now().__str__()}]  "
-                f"计时器设置成功，LatiaoAid大概会在"
-                f"[{(datetime.now() + timedelta(seconds=seconds_before_exit)).__str__()}]终止 (゜-゜)つロ "
-            )
-            return new_f
-
-    return decorator
 
 
 if __name__ == "__main__":
@@ -151,5 +118,5 @@ if __name__ == "__main__":
     # set the base_tab_link
     LatiaoAid.base_tab_link = f"https://live.bilibili.com/{args.room}"
 
-    # run the LatiaoAid.main with timer(if it's specified)
-    exit_timer(args.second + args.minute * 60)(run_LatiaoAid_main)(args)
+    # run the LatiaoAid.main
+    run_LatiaoAid_main(args)
