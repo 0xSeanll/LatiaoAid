@@ -1,8 +1,6 @@
 import argparse
 import os
-import signal
 import warnings
-from datetime import datetime, timedelta
 
 from LatiaoAid import LatiaoAid
 from Logger import Logger
@@ -98,6 +96,7 @@ def run_LatiaoAid_main(args: argparse.Namespace):
         headless=args.headless,
         disable_image=args.disable_image,
         seconds_before_exit=args.second + args.minute * 60,
+        room=args.room,
         logger=Logger(
             print_to_console=not args.silent,
             print_to_log=args.log,
