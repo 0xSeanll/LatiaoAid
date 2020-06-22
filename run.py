@@ -7,9 +7,11 @@ LatiaoAid(
     geckodriver_path='/usr/local/bin/geckodriver',
     headless=False,
     disable_image=False,
+    room=22198526,
     logger=Logger(
         print_to_console=True,
         print_to_log=False,
         log_path='./log.txt',
-    )
+    ),
+
 ).main()

@@ -2,22 +2,22 @@
 
 import sys
 import traceback
-from PIL import Image
 from datetime import datetime, timedelta
 from io import BytesIO
+from time import sleep
+
+from PIL import Image
 from selenium import webdriver
 from selenium.common.exceptions import *
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
-from time import sleep
 
 from Logger import Logger
 
 
 class LatiaoAid:
     base_url = "https://passport.bilibili.com/login"
-    base_tab_link = "https://live.bilibili.com/22198526"
 
     def __init__(
             self,
@@ -26,6 +26,7 @@ class LatiaoAid:
             disable_image=False,
             geckodriver_path="",
             logger=None,
+            room=22198526
     ):
         self.logger = Logger() if logger is None else logger
         options = webdriver.FirefoxOptions()
@@ -43,6 +44,7 @@ class LatiaoAid:
         self.qrcode = None  # The login qrcode
         self._del_time = None  # The time when main process destory
         self.timer = seconds_before_exit
+        self.base_tab_link = "https://live.bilibili.com/{}".format(room)
 
     @property
     def timer(self):
@@ -90,7 +92,7 @@ class LatiaoAid:
         :return:
         """
         self.logger.log("开始加载 Base Tab")
-        self.driver.get(LatiaoAid.base_tab_link)
+        self.driver.get(self.base_tab_link)
         while self.timer:
             try:
                 # Delete JS player
@@ -124,9 +126,9 @@ class LatiaoAid:
                     )
                 )
                 self.logger.log("Base Tab 加载成功～")
-            except TimeoutError:
+            except TimeoutException:
                 self.logger.err("login()", "Failed to load channel 528")
-                self.driver.get(LatiaoAid.base_tab_link)
+                self.driver.get(self.base_tab_link)
                 continue
             else:
                 break
@@ -174,8 +176,8 @@ class LatiaoAid:
                     links.append(link)
             except NoSuchElementException:
                 # The Latiao is in base_tab channel.
-                if LatiaoAid.base_tab_link not in links:
-                    links.append(LatiaoAid.base_tab_link)
+                if self.base_tab_link not in links:
+                    links.append(self.base_tab_link)
                 continue
         self.clear_chat_history_panel()
         return links
